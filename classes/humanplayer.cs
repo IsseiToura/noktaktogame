@@ -5,7 +5,8 @@ namespace assessment2
     {
         public override Move MakeMove(Board[] boards)
         {
-            return UI.GetMoveFromHumanPlayer(this);
+            Console.WriteLine($"{Name}, it's your turn");
+            return UI.GetMoveFromHumanPlayer();
         }
     }
 

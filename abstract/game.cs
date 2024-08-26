@@ -10,8 +10,9 @@ namespace assessment2
         protected Player player2;
         protected char player2Mark;
         protected MoveHistory moveHistory;
-        protected int currentPlayerIndex;   
-        private readonly string saveFilepath = @"C:\Users\issei\OneDrive - Queensland University of Technology\IFN563 Object Oriented Design\assessment2\savefile.log"; 
+        protected int currentPlayerIndex;
+        protected IHelpSystem helpSystem;   
+        private readonly string saveFilepath = Path.Combine(Environment.CurrentDirectory, "savefile.log"); 
         public void SetGame()
         {
             gameMode = UI.SelectGameMode();
@@ -25,19 +26,29 @@ namespace assessment2
                 player2 = new ComputerPlayer {Name = "Computer"};
             }
         }
+
         public abstract void Start();
+        
         public abstract bool IsGameOver();
+        
         protected void SwitchPlayer()
         {
             currentPlayerIndex = 1 - currentPlayerIndex; 
         }
+        
         protected Player GetCurrentPlayer()
         {
             return currentPlayerIndex == 0 ? player1 : player2;
         }
+        
         protected char GetCurrentMark()
         {
             return currentPlayerIndex == 0 ? player1Mark : player2Mark;
+        }
+        
+        public void ShowHelp()
+        {
+            helpSystem.ShowHelp();
         }
         public void Save()
         {
@@ -69,6 +80,7 @@ namespace assessment2
                 Console.WriteLine($"An error occured while saving a game: {ex.Message}");
             }
         }
+        
         public void Load()
         {
             try

@@ -5,6 +5,7 @@ namespace assessment2
     {
         private Stack<Move> history = new Stack<Move>();
         private Stack<Move> redoStack = new Stack<Move>();
+        
         public void RecordMove(Move move)
         {
             history.Push(move);
@@ -21,6 +22,7 @@ namespace assessment2
                 grid[move.Row, move.Col] = '\0';
             }
         }
+        
         public void Redo(Board[] boards, char playerMark)
         {
             if (redoStack.Count >0 )

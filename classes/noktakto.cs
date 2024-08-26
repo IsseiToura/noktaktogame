@@ -6,12 +6,13 @@ namespace assessment2
     {
         public Noktakto()
         {
-            int gridSize = 3;
-            this.boards = new Board[3] { new Board(gridSize), new Board(gridSize), new Board(gridSize) };
+            const int GRIDSIZE = 3;
+            this.boards = new Board[3] { new Board(GRIDSIZE), new Board(GRIDSIZE), new Board(GRIDSIZE) };
             this.moveHistory = new MoveHistory();
             this.currentPlayerIndex = 0;
             this.player1Mark = 'X';
             this.player2Mark = 'X';
+            this.helpSystem = new NoktaktoHelpSystem();
         }
 
         public override void Start()
@@ -19,8 +20,8 @@ namespace assessment2
             bool isLoadGame =UI.IsLoad();
             if(isLoadGame)
             {
-                int gridSize = 3;
-                this.boards = new Board[3] { new Board(gridSize), new Board(gridSize), new Board(gridSize) };
+                const int GRIDSIZE = 3;
+                this.boards = new Board[3] { new Board(GRIDSIZE), new Board(GRIDSIZE), new Board(GRIDSIZE) };
                 Load();
             }
             else
@@ -31,6 +32,7 @@ namespace assessment2
             while(!IsGameOver())
             {
                 UI.DisplayBoard(boards);
+                UI.HelpDisplay(helpSystem);
                 var player = GetCurrentPlayer();
                 var move = player.MakeMove(boards);
                 if (move.IsValid(boards))
@@ -96,14 +98,15 @@ namespace assessment2
         {
             foreach (var board in boards)
             {
-                if(CheckThreeInRow(board))
+                if(CheckThreeInLIne(board))
                 {
                     return true;
                 }
             }
             return false;
         }
-        public bool CheckThreeInRow(Board board)
+        
+        public bool CheckThreeInLIne(Board board)
         {
             char[,] grid = board.GetGrid();
             for (int row = 0; row < 3 ; row++)

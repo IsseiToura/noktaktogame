@@ -26,6 +26,7 @@ namespace assessment2
 
             return true;
         }
+       
         public void Execute(Board[] boards, char playerMark)
         {
             if(IsValid(boards)) 
@@ -34,6 +35,7 @@ namespace assessment2
                 grid[Row,Col] = playerMark;
             }
         }
+       
         public static Move GetRandomValidMove(Board[] boards)
         {
             Random random = new Random();

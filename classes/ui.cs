@@ -1,3 +1,4 @@
+using System.Net;
 using assessment2;
 namespace assessment2
 {
@@ -23,11 +24,13 @@ namespace assessment2
                 }
             }
         }
+        
         public static void WelcomeMessage()
         {
             Console.WriteLine("Let's start the game!");
             Console.WriteLine();
         }
+        
         public static bool IsLoad()
         {
             while(true)
@@ -49,6 +52,7 @@ namespace assessment2
             }
         }
 
+        
         public static void DisplayBoard(Board[] boards)
         {
             int gridSize = boards[0].GetGrid().GetLength(0);
@@ -107,20 +111,37 @@ namespace assessment2
             Console.WriteLine();
         }
 
-        public static Move GetMoveFromHumanPlayer(HumanPlayer player)
+        public static void HelpDisplay(IHelpSystem helpSystem)
+        {
+            while(true)
+            {
+                Console.WriteLine("Type 'help' for instracutions or press Enter to continue");
+                string userInput = Console.ReadLine().Trim().ToLower();
+                if(userInput == "help")
+                {
+                    helpSystem.ShowHelp();
+                    continue;
+                }
+                else if(string.IsNullOrEmpty(userInput))
+                {
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Please type 'help' or press enter.");
+                }
+
+            }
+        }
+        
+        public static Move GetMoveFromHumanPlayer()
         {
             while(true)
             {
                 try
                 {
-                    Console.WriteLine($"{player.Name}");
-                    Console.WriteLine("Enter your move as 'Board Index,row,col' (e.g., 1,1,2), or type 'help' for instractions.");
+                    Console.WriteLine("Enter your move as 'Board Index,row,col' (e.g., 1,1,2)");
                     string input = Console.ReadLine().Trim().ToLower();
-                    if(input == "help")
-                    {
-                        HelpSystem.ShowHelp();
-                        continue;
-                    }
 
                     string[] parts = input.Split(',');
 
@@ -172,6 +193,7 @@ namespace assessment2
                 }
             }
         }
+        
         public static bool IsRedo()
         {
             while(true)
@@ -192,6 +214,7 @@ namespace assessment2
                 }
             }
         }
+        
         public static bool IsSave()
         {
             while(true)
